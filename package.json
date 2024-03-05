@@ -4,7 +4,8 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "npx vitest run"
+    "test": "npx vitest run",
+    "test:watch": "npx vitest"
   },
   "keywords": [],
   "author": "",
@@ -12,6 +13,10 @@
   "devDependencies": {
     "@types/node": "^20.11.24",
     "typescript": "^5.3.3",
+    "vite-tsconfig-paths": "^4.3.1",
     "vitest": "^1.3.1"
+  },
+  "dependencies": {
+    "dayjs": "^1.11.10"
   }
 }
