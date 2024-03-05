@@ -1,3 +1,3 @@
-import Slug from './slug';
+import Slug from "./slug"
 
-export { Slug };
+export { Slug }
