@@ -1,5 +1,5 @@
 import { Optional } from "@/core/types"
-import { Slug } from "../shared"
+import { Slug } from "./shared"
 import { Entity, UniqueEntityID } from "@/core/entities"
 import dayjs from "dayjs"
 
