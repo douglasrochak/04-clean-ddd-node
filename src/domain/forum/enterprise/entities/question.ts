@@ -3,7 +3,7 @@ import { Slug } from "./shared"
 import { Entity, UniqueEntityID } from "@/core/entities"
 import dayjs from "dayjs"
 
-interface QuestionProps {
+export interface QuestionProps {
   title: string
   slug: Slug
   content: string
@@ -22,7 +22,7 @@ export default class Question extends Entity<QuestionProps> {
       {
         ...props,
         slug: props.slug ?? Slug.createFromText(props.title),
-        createdAt: new Date(),
+        createdAt: props.createdAt ?? new Date(),
       },
       id
     )

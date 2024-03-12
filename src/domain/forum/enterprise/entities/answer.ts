@@ -1,7 +1,7 @@
 import { Entity, UniqueEntityID } from "@/core/entities"
 import { Optional } from "@/core/types"
 
-interface AnswerProps {
+export interface AnswerProps {
   content: string
   authorId: UniqueEntityID
   questionId: UniqueEntityID
@@ -17,7 +17,7 @@ export default class Answer extends Entity<AnswerProps> {
     const answer = new Answer(
       {
         ...props,
-        createdAt: new Date(),
+        createdAt: props.createdAt ?? new Date(),
       },
       id
     )
