@@ -22,7 +22,7 @@ export default class QuestionComment extends Comment<QuestionCommentProps> {
     return questionComment
   }
 
-  get questionCommentId() {
+  get questionId() {
     return this.props.questionId
   }
 }
