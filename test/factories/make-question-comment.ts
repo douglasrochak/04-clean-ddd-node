@@ -4,14 +4,14 @@ import QuestionComment, {
 } from "@/domain/forum/enterprise/entities/question-comment"
 import { faker } from "@faker-js/faker"
 
-export function makeQuestion(
+export function makeQuestionComment(
   override: Partial<QuestionCommentProps> = {},
   id?: UniqueEntityID
 ) {
   const questionComment = QuestionComment.create(
     {
       authorId: new UniqueEntityID(),
-      questionId: new UniqueEntityID(),
+      questionCommentId: new UniqueEntityID(),
       content: faker.lorem.text(),
       ...override,
     },
