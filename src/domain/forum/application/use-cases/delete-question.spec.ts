@@ -2,6 +2,7 @@ import { MemoryQuestionsRepo } from "test/memory-questions-repo"
 import { makeQuestion } from "test/factories/make-question"
 import DeleteQuestionUseCase from "./delete-question"
 import { UniqueEntityID } from "@/core/entities"
+import { NotAllowedError } from "./errors/not-allowed"
 
 describe("Delete Question Use Case", () => {
   let repo: MemoryQuestionsRepo
@@ -33,12 +34,13 @@ describe("Delete Question Use Case", () => {
     const newQuestion = makeQuestion({}, new UniqueEntityID(id))
     await repo.create(newQuestion)
 
-    await expect(() => {
-      return sut.execute({
-        questionId: id,
-        authorId: "author-id",
-      })
-    }).rejects.toBeInstanceOf(Error)
+    const result = await sut.execute({
+      questionId: id,
+      authorId: "author-id",
+    })
+
     expect(repo.items).toHaveLength(1)
+    expect(result.isLeft()).toBe(true)
+    expect(result.value).toBeInstanceOf(NotAllowedError)
   })
 })

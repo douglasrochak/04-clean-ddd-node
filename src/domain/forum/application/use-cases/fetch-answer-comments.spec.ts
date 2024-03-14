@@ -18,12 +18,13 @@ describe("Fetch Answer Comments Use Case", () => {
     await repo.create(makeAnswerComment({ answerId }))
     await repo.create(makeAnswerComment({ answerId }))
 
-    const { answerComments } = await sut.execute({
+    const result = await sut.execute({
       answerId: answerId.toString(),
       page: 1,
     })
 
-    expect(answerComments).toHaveLength(3)
+    expect(result.isRight()).toBe(true)
+    expect(result.value?.answerComments).toHaveLength(3)
   })
 
   it("Should be able to fetch paginated answer comments", async () => {
@@ -32,11 +33,12 @@ describe("Fetch Answer Comments Use Case", () => {
       await repo.create(makeAnswerComment({ answerId }))
     }
 
-    const { answerComments } = await sut.execute({
+    const result = await sut.execute({
       answerId: answerId.toString(),
       page: 2,
     })
 
-    expect(answerComments).toHaveLength(2)
+    expect(result.isRight()).toBe(true)
+    expect(result.value?.answerComments).toHaveLength(2)
   })
 })

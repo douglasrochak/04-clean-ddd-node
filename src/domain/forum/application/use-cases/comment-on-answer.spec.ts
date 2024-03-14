@@ -14,7 +14,7 @@ describe("Comment on Answer Use Case", () => {
     sut = new CommentOnAnswerUseCase(answerRepo, answerCommentsRepo)
   })
 
-  it("Should be able to answer on answer", async () => {
+  it("Should be able to comment on answer", async () => {
     const answer = makeAnswer()
     answerRepo.create(answer)
 

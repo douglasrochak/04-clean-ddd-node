@@ -4,6 +4,7 @@ import { makeAnswer } from "test/factories/make-answer"
 import { MemoryQuestionsRepo } from "test/memory-questions-repo"
 import ChooseQuestionBestAnswerUseCase from "./choose-question-best-answer"
 import { makeQuestion } from "test/factories/make-question"
+import { NotAllowedError } from "./errors/not-allowed"
 
 describe("Choose Question Best Answer Use Case", () => {
   let answerRepo: MemoryAnswersRepo
@@ -46,11 +47,12 @@ describe("Choose Question Best Answer Use Case", () => {
     questionRepo.create(question)
     answerRepo.create(answer)
 
-    await expect(() => {
-      return sut.execute({
-        answerId: answer.id.toString(),
-        authorId: "not-same-id",
-      })
-    }).rejects.toBeInstanceOf(Error)
+    const result = await sut.execute({
+      answerId: answer.id.toString(),
+      authorId: "not-same-id",
+    })
+
+    expect(result.isLeft()).toBe(true)
+    expect(result.value).toBeInstanceOf(NotAllowedError)
   })
 })

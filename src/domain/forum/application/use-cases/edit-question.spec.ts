@@ -2,6 +2,7 @@ import { MemoryQuestionsRepo } from "test/memory-questions-repo"
 import { makeQuestion } from "test/factories/make-question"
 import EditQuestionUseCase from "./edit-question"
 import { UniqueEntityID } from "@/core/entities"
+import { NotAllowedError } from "./errors/not-allowed"
 
 describe("Edit Question Use Case", () => {
   let repo: MemoryQuestionsRepo
@@ -23,13 +24,14 @@ describe("Edit Question Use Case", () => {
     )
     await repo.create(newQuestion)
 
-    await sut.execute({
+    const result = await sut.execute({
       questionId: ID,
       authorId: "author-id",
       title: TITLE,
       content: CONTENT,
     })
 
+    expect(result.isRight()).toBe(true)
     expect(repo.items[0]).toEqual(
       expect.objectContaining({
         title: TITLE,
@@ -48,18 +50,18 @@ describe("Edit Question Use Case", () => {
     )
     await repo.create(newQuestion)
 
-    await expect(() => {
-      return sut.execute({
-        questionId: ID,
-        authorId: "author-id",
-        title: TITLE,
-        content: CONTENT,
-      })
-    }).rejects.toBeInstanceOf(Error)
+    const result = await sut.execute({
+      questionId: ID,
+      authorId: "author-id",
+      title: TITLE,
+      content: CONTENT,
+    })
     expect(repo.items[0]).toEqual(
       expect.objectContaining({
         title: "Question title",
       })
     )
+    expect(result.isLeft()).toBe(true)
+    expect(result.value).toBeInstanceOf(NotAllowedError)
   })
 })

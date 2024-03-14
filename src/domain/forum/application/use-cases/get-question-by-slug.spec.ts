@@ -19,11 +19,15 @@ describe("Get Question By Slug Use Case", () => {
 
     await repo.create(newQuestion)
 
-    const { question } = await sut.execute({
+    const result = await sut.execute({
       slug: "example-question",
     })
 
-    expect(question).toBeTruthy()
-    expect(question.slug.value).toEqual("example-question")
+    expect(result.isRight()).toBe(true)
+    expect(result.value).toMatchObject({
+      question: expect.objectContaining({
+        title: newQuestion.title,
+      }),
+    })
   })
 })
