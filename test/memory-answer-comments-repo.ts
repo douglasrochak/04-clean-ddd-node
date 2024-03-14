@@ -1,3 +1,4 @@
+import { PaginationParams } from "@/core/repositories/pagination-params"
 import { AnswerCommentsRepository } from "@/domain/forum/application/repositories/answer-comments-repository"
 import { AnswerComment } from "@/domain/forum/enterprise/entities"
 
@@ -15,10 +16,21 @@ export class MemoryAnswerCommentsRepo implements AnswerCommentsRepository {
   }
 
   async delete(answerComment: AnswerComment): Promise<void> {
-    const questionIndex = this.items.findIndex(
+    const answerIndex = this.items.findIndex(
       (item) => item.id === answerComment.id
     )
 
-    this.items.splice(questionIndex, 1)
+    this.items.splice(answerIndex, 1)
+  }
+
+  async findManyByAnswerId(
+    answerId: string,
+    { page }: PaginationParams
+  ): Promise<AnswerComment[]> {
+    const answers = this.items
+      .filter((item) => item.answerId.toString() === answerId)
+      .slice((page - 1) * 20, page * 20)
+
+    return answers
   }
 }
