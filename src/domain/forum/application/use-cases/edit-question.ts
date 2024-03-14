@@ -3,12 +3,17 @@ import { Question } from "../../enterprise/entities"
 import { QuestionsRepository } from "../repositories/questions-repository"
 import { ResourceNotFoundError } from "./errors/resource-not-found"
 import { NotAllowedError } from "./errors/not-allowed"
+import { QuestionAttachmentsRepository } from "../repositories/question-attachments-repository"
+import { QuestionAttachmentList } from "../../enterprise/entities/question-attachment-list"
+import QuestionAttachment from "../../enterprise/entities/question-attachment"
+import { UniqueEntityID } from "@/core/entities"
 
 interface EditQuestionUseCaseRequest {
   questionId: string
   authorId: string
   title: string
   content: string
+  attachmentsIds: string[]
 }
 
 type EditQuestionUseCaseResponse = Either<
@@ -19,25 +24,45 @@ type EditQuestionUseCaseResponse = Either<
 >
 
 export default class EditQuestionUseCase {
-  constructor(private repo: QuestionsRepository) {}
+  constructor(
+    private questionsRepo: QuestionsRepository,
+    private questionAttachmentsRepo: QuestionAttachmentsRepository
+  ) {}
 
   async execute({
     questionId,
     authorId,
     title,
     content,
+    attachmentsIds,
   }: EditQuestionUseCaseRequest): Promise<EditQuestionUseCaseResponse> {
-    const question = await this.repo.findById(questionId)
+    const question = await this.questionsRepo.findById(questionId)
 
     if (!question) return left(new ResourceNotFoundError())
 
     if (question.authorId.toString() !== authorId)
       return left(new NotAllowedError())
 
+    const currentQuestionAttachments =
+      await this.questionAttachmentsRepo.findManyByQuestionId(questionId)
+    const questionAttachmentList = new QuestionAttachmentList(
+      currentQuestionAttachments
+    )
+
+    const questionAttachments = attachmentsIds.map((attachmentId) =>
+      QuestionAttachment.create({
+        attachmentId: new UniqueEntityID(attachmentId),
+        questionId: question.id,
+      })
+    )
+
+    questionAttachmentList.update(questionAttachments)
+
     question.title = title
     question.content = content
+    question.attachments = questionAttachmentList
 
-    await this.repo.save(question)
+    await this.questionsRepo.save(question)
 
     return right({ question })
   }
