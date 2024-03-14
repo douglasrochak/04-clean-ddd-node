@@ -11,7 +11,7 @@ export function makeQuestionComment(
   const questionComment = QuestionComment.create(
     {
       authorId: new UniqueEntityID(),
-      questionCommentId: new UniqueEntityID(),
+      questionId: new UniqueEntityID(),
       content: faker.lorem.text(),
       ...override,
     },

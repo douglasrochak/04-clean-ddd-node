@@ -3,7 +3,7 @@ import { Optional } from "@/core/types"
 import Comment, { CommentProps } from "./comment"
 
 export interface QuestionCommentProps extends CommentProps {
-  questionCommentId: UniqueEntityID
+  questionId: UniqueEntityID
 }
 
 export default class QuestionComment extends Comment<QuestionCommentProps> {
@@ -23,6 +23,6 @@ export default class QuestionComment extends Comment<QuestionCommentProps> {
   }
 
   get questionCommentId() {
-    return this.props.questionCommentId
+    return this.props.questionId
   }
 }
