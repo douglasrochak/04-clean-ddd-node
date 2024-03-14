@@ -3,7 +3,7 @@ import GetQuestionBySlugUseCase from "./get-question-by-slug"
 import { makeQuestion } from "test/factories/make-question"
 import { Slug } from "../../enterprise/entities/shared"
 
-describe("Get Question By Slug", () => {
+describe("Get Question By Slug Use Case", () => {
   let repo: MemoryQuestionsRepo
   let sut: GetQuestionBySlugUseCase
 
@@ -12,7 +12,7 @@ describe("Get Question By Slug", () => {
     sut = new GetQuestionBySlugUseCase(repo)
   })
 
-  it("should be able to get a question by slug", async () => {
+  it("Should be able to get a question by slug", async () => {
     const newQuestion = makeQuestion({
       slug: Slug.create("example-question"),
     })

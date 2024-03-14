@@ -3,7 +3,7 @@ import { makeAnswer } from "test/factories/make-answer"
 import CommentOnAnswerUseCase from "./comment-on-answer"
 import { MemoryAnswerCommentsRepo } from "test/memory-answer-comments-repo"
 
-describe("Answer on Answer Use Case", () => {
+describe("Comment on Answer Use Case", () => {
   let answerRepo: MemoryAnswersRepo
   let answerCommentsRepo: MemoryAnswerCommentsRepo
   let sut: CommentOnAnswerUseCase

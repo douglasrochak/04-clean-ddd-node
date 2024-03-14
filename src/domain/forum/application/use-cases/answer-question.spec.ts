@@ -1,7 +1,7 @@
 import { MemoryAnswersRepo } from "test/memory-answers-repo"
 import AnswerQuestionUseCase from "./answer-question"
 
-describe("Create Question", () => {
+describe("Answer Question Use Case", () => {
   let repo: MemoryAnswersRepo
   let sut: AnswerQuestionUseCase
 

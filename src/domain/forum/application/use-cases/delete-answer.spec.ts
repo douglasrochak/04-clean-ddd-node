@@ -3,7 +3,7 @@ import DeleteAnswerUseCase from "./delete-answer"
 import { UniqueEntityID } from "@/core/entities"
 import { makeAnswer } from "test/factories/make-answer"
 
-describe("delete answer use case", () => {
+describe("Delete Answer Use Case", () => {
   let repo: MemoryAnswersRepo
   let sut: DeleteAnswerUseCase
 
@@ -12,7 +12,7 @@ describe("delete answer use case", () => {
     sut = new DeleteAnswerUseCase(repo)
   })
 
-  it("should be able to delete a answer", async () => {
+  it("Should be able to delete an answer", async () => {
     const id = "answer-id"
     const newAnswer = makeAnswer(
       { authorId: new UniqueEntityID("author-id") },
@@ -28,7 +28,7 @@ describe("delete answer use case", () => {
     expect(repo.items).toHaveLength(0)
   })
 
-  it("should not be able to delete a answer with different authorId", async () => {
+  it("Should not be able to delete an answer with different authorId", async () => {
     const id = "answer-id"
     const newAnswer = makeAnswer({}, new UniqueEntityID(id))
     await repo.create(newAnswer)

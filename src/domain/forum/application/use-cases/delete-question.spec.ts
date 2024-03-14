@@ -3,7 +3,7 @@ import { makeQuestion } from "test/factories/make-question"
 import DeleteQuestionUseCase from "./delete-question"
 import { UniqueEntityID } from "@/core/entities"
 
-describe("delete question use case", () => {
+describe("Delete Question Use Case", () => {
   let repo: MemoryQuestionsRepo
   let sut: DeleteQuestionUseCase
 
@@ -12,7 +12,7 @@ describe("delete question use case", () => {
     sut = new DeleteQuestionUseCase(repo)
   })
 
-  it("should be able to delete a question", async () => {
+  it("Should be able to delete a question", async () => {
     const id = "question-id"
     const newQuestion = makeQuestion(
       { authorId: new UniqueEntityID("author-id") },
@@ -28,7 +28,7 @@ describe("delete question use case", () => {
     expect(repo.items).toHaveLength(0)
   })
 
-  it("should not be able to delete a question with different authorId", async () => {
+  it("Should not be able to delete a question with different authorId", async () => {
     const id = "question-id"
     const newQuestion = makeQuestion({}, new UniqueEntityID(id))
     await repo.create(newQuestion)

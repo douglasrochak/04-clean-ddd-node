@@ -3,7 +3,7 @@ import { makeAnswer } from "test/factories/make-answer"
 import EditAnswerUseCase from "./edit-answer"
 import { UniqueEntityID } from "@/core/entities"
 
-describe("edit answer use case", () => {
+describe("Edit Answer Use Case", () => {
   let repo: MemoryAnswersRepo
   let sut: EditAnswerUseCase
 
@@ -12,7 +12,7 @@ describe("edit answer use case", () => {
     sut = new EditAnswerUseCase(repo)
   })
 
-  it("should be able to edit a answer", async () => {
+  it("Should be able to edit a answer", async () => {
     const ID = "answer-id"
     const CONTENT = "Test Content"
 
@@ -35,7 +35,7 @@ describe("edit answer use case", () => {
     )
   })
 
-  it("should not be able to edit a answer with different authorId", async () => {
+  it("Should not be able to edit a answer with different authorId", async () => {
     const ID = "answer-id"
     const CONTENT = "Test Content"
 
