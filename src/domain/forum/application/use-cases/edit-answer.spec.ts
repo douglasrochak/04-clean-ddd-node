@@ -1,4 +1,4 @@
-import { MemoryAnswersRepo } from "test/memory-answers-repo"
+import { MemoryAnswersRepo } from "test/memory-answers-repository"
 import { makeAnswer } from "test/factories/make-answer"
 import EditAnswerUseCase from "./edit-answer"
 import { UniqueEntityID } from "@/core/entities"

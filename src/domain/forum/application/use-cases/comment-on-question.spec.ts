@@ -1,6 +1,6 @@
-import { MemoryQuestionsRepo } from "test/memory-questions-repo"
+import { MemoryQuestionsRepo } from "test/memory-questions-repository"
 import { makeQuestion } from "test/factories/make-question"
-import { MemoryQuestionCommentsRepo } from "test/memory-question-comments-repo"
+import { MemoryQuestionCommentsRepo } from "test/memory-question-comments-repository"
 import CommentOnQuestionUseCase from "./comment-on-question"
 
 describe("Comment on Question Use Case", () => {

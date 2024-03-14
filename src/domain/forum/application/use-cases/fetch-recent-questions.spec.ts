@@ -1,4 +1,4 @@
-import { MemoryQuestionsRepo } from "test/memory-questions-repo"
+import { MemoryQuestionsRepo } from "test/memory-questions-repository"
 import { makeQuestion } from "test/factories/make-question"
 import FetchRecentQuestionsUseCase from "./fetch-recent-questions"
 

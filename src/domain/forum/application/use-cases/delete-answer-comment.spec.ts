@@ -1,4 +1,4 @@
-import { MemoryAnswerCommentsRepo } from "test/memory-answer-comments-repo"
+import { MemoryAnswerCommentsRepo } from "test/memory-answer-comments-repository"
 import DeleteAnswerCommentUseCase from "./delete-answer-comment"
 import { makeAnswerComment } from "test/factories/make-answer-comment"
 import { UniqueEntityID } from "@/core/entities"

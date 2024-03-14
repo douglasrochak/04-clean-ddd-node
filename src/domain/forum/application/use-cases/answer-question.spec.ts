@@ -1,4 +1,4 @@
-import { MemoryAnswersRepo } from "test/memory-answers-repo"
+import { MemoryAnswersRepo } from "test/memory-answers-repository"
 import AnswerQuestionUseCase from "./answer-question"
 
 describe("Answer Question Use Case", () => {

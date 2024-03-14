@@ -1,4 +1,4 @@
-import { MemoryQuestionsRepo } from "test/memory-questions-repo"
+import { MemoryQuestionsRepo } from "test/memory-questions-repository"
 import GetQuestionBySlugUseCase from "./get-question-by-slug"
 import { makeQuestion } from "test/factories/make-question"
 import { Slug } from "../../enterprise/entities/shared"

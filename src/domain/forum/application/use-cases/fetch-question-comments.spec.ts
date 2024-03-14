@@ -1,4 +1,4 @@
-import { MemoryQuestionCommentsRepo } from "test/memory-question-comments-repo"
+import { MemoryQuestionCommentsRepo } from "test/memory-question-comments-repository"
 import FetchQuestionCommentsUseCase from "./fetch-question-comments"
 import { UniqueEntityID } from "@/core/entities"
 import { makeQuestionComment } from "test/factories/make-question-comment"

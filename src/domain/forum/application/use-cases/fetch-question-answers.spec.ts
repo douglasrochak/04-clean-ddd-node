@@ -1,6 +1,6 @@
 import { makeAnswer } from "test/factories/make-answer"
 import FetchQuestionAnswersUseCase from "./fetch-question-answers"
-import { MemoryAnswersRepo } from "test/memory-answers-repo"
+import { MemoryAnswersRepo } from "test/memory-answers-repository"
 import { UniqueEntityID } from "@/core/entities"
 
 describe("Fetch Question Answers Use Case", () => {

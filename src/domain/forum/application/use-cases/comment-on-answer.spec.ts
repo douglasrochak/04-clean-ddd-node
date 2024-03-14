@@ -1,7 +1,7 @@
-import { MemoryAnswersRepo } from "test/memory-answers-repo"
+import { MemoryAnswersRepo } from "test/memory-answers-repository"
 import { makeAnswer } from "test/factories/make-answer"
 import CommentOnAnswerUseCase from "./comment-on-answer"
-import { MemoryAnswerCommentsRepo } from "test/memory-answer-comments-repo"
+import { MemoryAnswerCommentsRepo } from "test/memory-answer-comments-repository"
 
 describe("Comment on Answer Use Case", () => {
   let answerRepo: MemoryAnswersRepo
