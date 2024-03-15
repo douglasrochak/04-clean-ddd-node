@@ -6,8 +6,10 @@ import ChooseQuestionBestAnswerUseCase from "./choose-question-best-answer"
 import { makeQuestion } from "test/factories/make-question"
 import { NotAllowedError } from "./errors/not-allowed"
 import { MemoryQuestionAttachmentsRepo } from "test/memory-question-attachments-repository"
+import { MemoryAnswerAttachmentsRepo } from "test/memory-answer-attachments-repository"
 
 describe("Choose Question Best Answer Use Case", () => {
+  let answerAttachmentsRepo: MemoryAnswerAttachmentsRepo
   let answersRepo: MemoryAnswersRepo
   let questionsRepo: MemoryQuestionsRepo
   let questionAttachmentsRepo: MemoryQuestionAttachmentsRepo
@@ -16,7 +18,8 @@ describe("Choose Question Best Answer Use Case", () => {
   beforeEach(() => {
     questionAttachmentsRepo = new MemoryQuestionAttachmentsRepo()
     questionsRepo = new MemoryQuestionsRepo(questionAttachmentsRepo)
-    answersRepo = new MemoryAnswersRepo()
+    answerAttachmentsRepo = new MemoryAnswerAttachmentsRepo()
+    answersRepo = new MemoryAnswersRepo(answerAttachmentsRepo)
     sut = new ChooseQuestionBestAnswerUseCase(questionsRepo, answersRepo)
   })
 

@@ -2,14 +2,17 @@ import { MemoryQuestionsRepo } from "test/memory-questions-repository"
 import GetQuestionBySlugUseCase from "./get-question-by-slug"
 import { makeQuestion } from "test/factories/make-question"
 import { Slug } from "../../enterprise/entities/shared"
+import { MemoryQuestionAttachmentsRepo } from "test/memory-question-attachments-repository"
 
 describe("Get Question By Slug Use Case", () => {
-  let repo: MemoryQuestionsRepo
+  let questionsRepo: MemoryQuestionsRepo
+  let questionAttachmentsRepo: MemoryQuestionAttachmentsRepo
   let sut: GetQuestionBySlugUseCase
 
   beforeEach(() => {
-    repo = new MemoryQuestionsRepo()
-    sut = new GetQuestionBySlugUseCase(repo)
+    questionAttachmentsRepo = new MemoryQuestionAttachmentsRepo()
+    questionsRepo = new MemoryQuestionsRepo(questionAttachmentsRepo)
+    sut = new GetQuestionBySlugUseCase(questionsRepo)
   })
 
   it("Should be able to get a question by slug", async () => {
@@ -17,7 +20,7 @@ describe("Get Question By Slug Use Case", () => {
       slug: Slug.create("example-question"),
     })
 
-    await repo.create(newQuestion)
+    await questionsRepo.create(newQuestion)
 
     const result = await sut.execute({
       slug: "example-question",

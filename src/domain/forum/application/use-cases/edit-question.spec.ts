@@ -12,8 +12,8 @@ describe("Edit Question Use Case", () => {
   let sut: EditQuestionUseCase
 
   beforeEach(() => {
-    questionsRepo = new MemoryQuestionsRepo()
     questionsAttachmentsRepo = new MemoryQuestionAttachmentsRepo()
+    questionsRepo = new MemoryQuestionsRepo(questionsAttachmentsRepo)
     sut = new EditQuestionUseCase(questionsRepo, questionsAttachmentsRepo)
   })
 
@@ -53,6 +53,7 @@ describe("Edit Question Use Case", () => {
         title: TITLE,
       })
     )
+    expect(questionsRepo.items[0].attachments.currentItems).toHaveLength(2)
     expect(questionsRepo.items[0].attachments.currentItems).toEqual([
       expect.objectContaining({
         attachmentId: new UniqueEntityID("1"),

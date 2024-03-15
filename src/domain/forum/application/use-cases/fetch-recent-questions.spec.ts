@@ -1,20 +1,29 @@
 import { MemoryQuestionsRepo } from "test/memory-questions-repository"
 import { makeQuestion } from "test/factories/make-question"
 import FetchRecentQuestionsUseCase from "./fetch-recent-questions"
+import { MemoryQuestionAttachmentsRepo } from "test/memory-question-attachments-repository"
 
 describe("Fetch Recent Questions Use Case", () => {
-  let repo: MemoryQuestionsRepo
+  let questionsRepo: MemoryQuestionsRepo
+  let questionAttachmentsRepo: MemoryQuestionAttachmentsRepo
   let sut: FetchRecentQuestionsUseCase
 
   beforeEach(() => {
-    repo = new MemoryQuestionsRepo()
-    sut = new FetchRecentQuestionsUseCase(repo)
+    questionAttachmentsRepo = new MemoryQuestionAttachmentsRepo()
+    questionsRepo = new MemoryQuestionsRepo(questionAttachmentsRepo)
+    sut = new FetchRecentQuestionsUseCase(questionsRepo)
   })
 
   it("Should be able to fetch recent questions", async () => {
-    await repo.create(makeQuestion({ createdAt: new Date(2023, 0, 20) }))
-    await repo.create(makeQuestion({ createdAt: new Date(2023, 0, 25) }))
-    await repo.create(makeQuestion({ createdAt: new Date(2023, 0, 18) }))
+    await questionsRepo.create(
+      makeQuestion({ createdAt: new Date(2023, 0, 20) })
+    )
+    await questionsRepo.create(
+      makeQuestion({ createdAt: new Date(2023, 0, 25) })
+    )
+    await questionsRepo.create(
+      makeQuestion({ createdAt: new Date(2023, 0, 18) })
+    )
 
     const result = await sut.execute({
       page: 1,
@@ -29,7 +38,7 @@ describe("Fetch Recent Questions Use Case", () => {
 
   it("Should be able to fetch paginated recent questions", async () => {
     for (let i = 0; i < 22; i++) {
-      await repo.create(makeQuestion())
+      await questionsRepo.create(makeQuestion())
     }
 
     const result = await sut.execute({

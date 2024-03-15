@@ -2,14 +2,17 @@ import { MemoryAnswersRepo } from "test/memory-answers-repository"
 import { makeAnswer } from "test/factories/make-answer"
 import CommentOnAnswerUseCase from "./comment-on-answer"
 import { MemoryAnswerCommentsRepo } from "test/memory-answer-comments-repository"
+import { MemoryAnswerAttachmentsRepo } from "test/memory-answer-attachments-repository"
 
 describe("Comment on Answer Use Case", () => {
   let answerRepo: MemoryAnswersRepo
+  let answerAttachmentsRepo: MemoryAnswerAttachmentsRepo
   let answerCommentsRepo: MemoryAnswerCommentsRepo
   let sut: CommentOnAnswerUseCase
 
   beforeEach(() => {
-    answerRepo = new MemoryAnswersRepo()
+    answerAttachmentsRepo = new MemoryAnswerAttachmentsRepo()
+    answerRepo = new MemoryAnswersRepo(answerAttachmentsRepo)
     answerCommentsRepo = new MemoryAnswerCommentsRepo()
     sut = new CommentOnAnswerUseCase(answerRepo, answerCommentsRepo)
   })
