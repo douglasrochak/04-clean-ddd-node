@@ -3,11 +3,16 @@ import { Answer } from "../../enterprise/entities"
 import { AnswersRepository } from "../repositories/answers-repository"
 import { ResourceNotFoundError } from "./errors/resource-not-found"
 import { NotAllowedError } from "./errors/not-allowed"
+import { AnswerAttachmentList } from "../../enterprise/entities/answer-attachment-list"
+import { UniqueEntityID } from "@/core/entities"
+import { AnswerAttachmentsRepository } from "../repositories/answer-attachments-repository"
+import AnswerAttachment from "../../enterprise/entities/answer-attachment"
 
 interface EditAnswerUseCaseRequest {
   answerId: string
   authorId: string
   content: string
+  attachmentsIds: string[]
 }
 
 type EditAnswerUseCaseResponse = Either<
@@ -18,23 +23,43 @@ type EditAnswerUseCaseResponse = Either<
 >
 
 export default class EditAnswerUseCase {
-  constructor(private repo: AnswersRepository) {}
+  constructor(
+    private answersRepo: AnswersRepository,
+    private answerAttachmentsRepo: AnswerAttachmentsRepository
+  ) {}
 
   async execute({
     answerId,
     authorId,
     content,
+    attachmentsIds,
   }: EditAnswerUseCaseRequest): Promise<EditAnswerUseCaseResponse> {
-    const answer = await this.repo.findById(answerId)
+    const answer = await this.answersRepo.findById(answerId)
 
     if (!answer) return left(new ResourceNotFoundError())
 
     if (answer.authorId.toString() !== authorId)
       return left(new NotAllowedError())
 
-    answer.content = content
+    const currentAnswerAttachments =
+      await this.answerAttachmentsRepo.findManyByAnswerId(answerId)
+    const answerAttachmentList = new AnswerAttachmentList(
+      currentAnswerAttachments
+    )
 
-    await this.repo.save(answer)
+    const answerAttachments = attachmentsIds.map((attachmentId) =>
+      AnswerAttachment.create({
+        attachmentId: new UniqueEntityID(attachmentId),
+        answerId: new UniqueEntityID(answerId),
+      })
+    )
+
+    answerAttachmentList.update(answerAttachments)
+
+    answer.content = content
+    answer.attachments = answerAttachmentList
+
+    await this.answersRepo.save(answer)
 
     return right({ answer })
   }
