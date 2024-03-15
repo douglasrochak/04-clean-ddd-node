@@ -3,14 +3,18 @@ import { makeAnswer } from "test/factories/make-answer"
 import EditAnswerUseCase from "./edit-answer"
 import { UniqueEntityID } from "@/core/entities"
 import { NotAllowedError } from "./errors/not-allowed"
+import { makeAnswerAttachment } from "test/factories/make-answer-attachment"
+import { MemoryAnswerAttachmentsRepo } from "test/memory-answer-attachments-repository"
 
 describe("Edit Answer Use Case", () => {
-  let repo: MemoryAnswersRepo
+  let answersRepo: MemoryAnswersRepo
+  let answerAttachmentsRepo: MemoryAnswerAttachmentsRepo
   let sut: EditAnswerUseCase
 
   beforeEach(() => {
-    repo = new MemoryAnswersRepo()
-    sut = new EditAnswerUseCase(repo)
+    answerAttachmentsRepo = new MemoryAnswerAttachmentsRepo()
+    answersRepo = new MemoryAnswersRepo(answerAttachmentsRepo)
+    sut = new EditAnswerUseCase(answersRepo, answerAttachmentsRepo)
   })
 
   it("Should be able to edit a answer", async () => {
@@ -21,19 +25,40 @@ describe("Edit Answer Use Case", () => {
       { authorId: new UniqueEntityID("author-id") },
       new UniqueEntityID(ID)
     )
-    await repo.create(newAnswer)
+    await answersRepo.create(newAnswer)
+
+    answerAttachmentsRepo.items.push(
+      makeAnswerAttachment({
+        answerId: newAnswer.id,
+        attachmentId: new UniqueEntityID("5"),
+      }),
+      makeAnswerAttachment({
+        answerId: newAnswer.id,
+        attachmentId: new UniqueEntityID("2"),
+      })
+    )
 
     await sut.execute({
       answerId: ID,
       authorId: "author-id",
       content: CONTENT,
+      attachmentsIds: ["1", "3"],
     })
 
-    expect(repo.items[0]).toEqual(
+    expect(answersRepo.items[0]).toEqual(
       expect.objectContaining({
         content: CONTENT,
       })
     )
+    expect(answersRepo.items[0].attachments.currentItems).toHaveLength(2)
+    expect(answersRepo.items[0].attachments.currentItems).toEqual([
+      expect.objectContaining({
+        attachmentId: new UniqueEntityID("1"),
+      }),
+      expect.objectContaining({
+        attachmentId: new UniqueEntityID("3"),
+      }),
+    ])
   })
 
   it("Should not be able to edit a answer with different authorId", async () => {
@@ -44,15 +69,16 @@ describe("Edit Answer Use Case", () => {
       { content: "Answer content" },
       new UniqueEntityID(ID)
     )
-    await repo.create(newAnswer)
+    await answersRepo.create(newAnswer)
 
     const result = await sut.execute({
       answerId: ID,
       authorId: "author-id",
       content: CONTENT,
+      attachmentsIds: [],
     })
 
-    expect(repo.items[0]).toEqual(
+    expect(answersRepo.items[0]).toEqual(
       expect.objectContaining({
         content: "Answer content",
       })
