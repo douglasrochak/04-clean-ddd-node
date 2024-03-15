@@ -1,4 +1,4 @@
-import { WatchedList } from "./watched-list"
+import { WatchedList } from "./"
 
 class NumberWatchedList extends WatchedList<number> {
   compareItems(a: number, b: number): boolean {
