@@ -4,9 +4,9 @@ import { makeAnswer } from "test/factories/make-answer"
 import { MemoryQuestionsRepo } from "test/memory-questions-repository"
 import ChooseQuestionBestAnswerUseCase from "./choose-question-best-answer"
 import { makeQuestion } from "test/factories/make-question"
-import { NotAllowedError } from "./errors/not-allowed"
 import { MemoryQuestionAttachmentsRepo } from "test/memory-question-attachments-repository"
 import { MemoryAnswerAttachmentsRepo } from "test/memory-answer-attachments-repository"
+import { NotAllowedError } from "@/core/errors/errors/not-allowed"
 
 describe("Choose Question Best Answer Use Case", () => {
   let answerAttachmentsRepo: MemoryAnswerAttachmentsRepo

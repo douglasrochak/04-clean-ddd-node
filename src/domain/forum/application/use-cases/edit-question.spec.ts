@@ -2,9 +2,9 @@ import { MemoryQuestionsRepo } from "test/memory-questions-repository"
 import { makeQuestion } from "test/factories/make-question"
 import EditQuestionUseCase from "./edit-question"
 import { UniqueEntityID } from "@/core/entities"
-import { NotAllowedError } from "./errors/not-allowed"
 import { MemoryQuestionAttachmentsRepo } from "test/memory-question-attachments-repository"
 import { makeQuestionAttachment } from "test/factories/make-question-attachment"
+import { NotAllowedError } from "@/core/errors/errors/not-allowed"
 
 describe("Edit Question Use Case", () => {
   let questionsRepo: MemoryQuestionsRepo

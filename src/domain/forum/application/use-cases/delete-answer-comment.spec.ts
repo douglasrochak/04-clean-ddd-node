@@ -2,7 +2,7 @@ import { MemoryAnswerCommentsRepo } from "test/memory-answer-comments-repository
 import DeleteAnswerCommentUseCase from "./delete-answer-comment"
 import { makeAnswerComment } from "test/factories/make-answer-comment"
 import { UniqueEntityID } from "@/core/entities"
-import { NotAllowedError } from "./errors/not-allowed"
+import { NotAllowedError } from "@/core/errors/errors/not-allowed"
 
 describe("Delete Answer Comment Use Case", () => {
   let repo: MemoryAnswerCommentsRepo

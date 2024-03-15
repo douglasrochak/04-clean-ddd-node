@@ -2,9 +2,9 @@ import { MemoryAnswersRepo } from "test/memory-answers-repository"
 import DeleteAnswerUseCase from "./delete-answer"
 import { UniqueEntityID } from "@/core/entities"
 import { makeAnswer } from "test/factories/make-answer"
-import { NotAllowedError } from "./errors/not-allowed"
 import { makeAnswerAttachment } from "test/factories/make-answer-attachment"
 import { MemoryAnswerAttachmentsRepo } from "test/memory-answer-attachments-repository"
+import { NotAllowedError } from "@/core/errors/errors/not-allowed"
 
 describe("Delete Answer Use Case", () => {
   let answersRepo: MemoryAnswersRepo

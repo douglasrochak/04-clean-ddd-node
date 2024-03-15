@@ -2,9 +2,9 @@ import { MemoryQuestionsRepo } from "test/memory-questions-repository"
 import { makeQuestion } from "test/factories/make-question"
 import DeleteQuestionUseCase from "./delete-question"
 import { UniqueEntityID } from "@/core/entities"
-import { NotAllowedError } from "./errors/not-allowed"
 import { MemoryQuestionAttachmentsRepo } from "test/memory-question-attachments-repository"
 import { makeQuestionAttachment } from "test/factories/make-question-attachment"
+import { NotAllowedError } from "@/core/errors/errors/not-allowed"
 
 describe("Delete Question Use Case", () => {
   let questionRepo: MemoryQuestionsRepo
